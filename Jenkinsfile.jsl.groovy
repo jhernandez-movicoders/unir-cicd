@@ -48,7 +48,7 @@ pipeline {
             emailext body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}",
                 subject: "ERROR CI: Project name -> ${env.JOB_NAME}",
                 from: 'juanjose.hernandez886@comunidadunir.net',
-                recipientProviders: [requestor()]
+                recipientProviders: [culprits(), developers(), requestor()]
         }  
     }
 }
