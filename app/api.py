@@ -9,12 +9,13 @@ CALCULATOR = Calculator()
 api_application = Flask(__name__)
 HEADERS = {"Content-Type": "text/plain", "Access-Control-Allow-Origin": "*"}
 
-aflsdfjls
 @api_application.route("/")
 def hello():
     return "Hello from The Calculator!\n"
 
-
+def skadjsa:
+    return "Hello from The Calculator!\n"
+    
 @api_application.route("/calc/add/<op_1>/<op_2>", methods=["GET"])
 def add(op_1, op_2):
     try:
