@@ -3,11 +3,6 @@ pipeline {
         label 'docker'
     }
     stages {
-        stage('Error') {
-            steps {
-                sh 'error.exe'
-            }
-        }
         stage('Source') {
             steps {
                 git 'https://github.com/Anselm82/unir-cicd.git'
