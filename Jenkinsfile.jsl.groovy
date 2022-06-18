@@ -1,3 +1,22 @@
+def SendEmailNotification(String result) {
+  
+    // config 
+    def to = emailextrecipients([
+           requestor()
+    ])
+    
+    // set variables
+    def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${result}"
+    def content = '${JELLY_SCRIPT,template="html"}'
+
+    // send email
+    if(to != null && !to.isEmpty()) {
+      emailext(body: content, mimeType: 'text/html',
+         subject: subject,
+         to: to, attachLog: true )
+    }
+}
+
 pipeline {
     agent {
         label 'docker'
@@ -45,7 +64,8 @@ pipeline {
             cleanWs()
         }
         failure {  
-             mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "anselm82@gmail.com";  
+            SendEmailNotification("FAILURE")
+            //mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "anselm82@gmail.com";  
         }  
     }
 }
