@@ -1,22 +1,3 @@
-def SendEmailNotification(String result) {
-  
-    // config 
-    def to = emailextrecipients([
-           "anselm82@gmail.com"
-    ])
-    
-    // set variables
-    def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${result}"
-    def content = '${JELLY_SCRIPT,template="html"}'
-
-    // send email
-    if(to != null && !to.isEmpty()) {
-      emailext(body: content, mimeType: 'text/html',
-         subject: subject,
-         to: to, attachLog: true )
-    }
-}
-
 pipeline {
     agent {
         label 'docker'
@@ -67,7 +48,7 @@ pipeline {
             emailext body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}",
                 subject: "ERROR CI: Project name -> ${env.JOB_NAME}",
                 from: 'juanjose.hernandez886@comunidadunir.net',
-                recipientProviders: [requestor()],
+                recipientProviders: [requestor()]
         }  
     }
 }
